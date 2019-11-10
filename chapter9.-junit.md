@@ -2,8 +2,8 @@
 
 ## 9.1 Profile 클래스와 SRP
 
-{% code-tabs %}
-{% code-tabs-item title="Profile.java" %}
+{% tabs %}
+{% tab title="Profile.java" %}
 ```java
 /***
  * Excerpted from "Pragmatic Unit Testing in Java with JUnit",
@@ -95,8 +95,8 @@ public class Profile {
    }
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 
 이상적이지 않은 설계
 
@@ -127,8 +127,8 @@ public boolean matches(Criteria criteria) {
 
 매칭하는 기능 분리
 
-{% code-tabs %}
-{% code-tabs-item title="MatchSet.java" %}
+{% tabs %}
+{% tab title="MatchSet.java" %}
 ```java
 /***
  * Excerpted from "Pragmatic Unit Testing in Java with JUnit",
@@ -166,8 +166,8 @@ public class MatchSet {
    }
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 
 Profile 클래스를 실세계 개념에 잘 맞는다는 이유로 단일 클래스로 한정한다면 피해가 커짐 \( 클래스는 점점 커질 것이며 복잡해짐, 클래스를 수정할 때 마다 관련 없는 항목들이 깨지기 쉬움 \)
 
@@ -206,8 +206,8 @@ private 메서드를 테스트하려는 충동은 클래스가 필요 이상으�
 
 ### 9.4.2 깨진 테스트 고치기
 
-{% code-tabs %}
-{% code-tabs-item title="MatchSetTest.java" %}
+{% tabs %}
+{% tab title="MatchSetTest.java" %}
 ```java
 /***
  * Excerpted from "Pragmatic Unit Testing in Java with JUnit",
@@ -356,8 +356,8 @@ public class MatchSetTest {
 
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 
 MatchSet 코드를 테스트하는 코드는 더 이상 Profile 객체를 생성하지 않아도 됨.
 
@@ -369,8 +369,8 @@ MatchSet\(\) 생성자는 점수를 계산하는 작업을 함. \( 계산된 점
 
 요청을 받았을 때 점수를 계산하도록 코드 변경
 
-{% code-tabs %}
-{% code-tabs-item title="MatchSet.java" %}
+{% tabs %}
+{% tab title="MatchSet.java" %}
 ```java
 public int getScore() {
    int score = 0;
@@ -380,8 +380,8 @@ public int getScore() {
    return score;
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 
 Score 필드 삭제, calculateScore\(\) 메서드는 getScore\(\) 매서드 내부로 인라인됨.
 

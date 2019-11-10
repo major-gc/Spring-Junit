@@ -10,19 +10,19 @@
 
 다음의 코드들을 테스트 해보자.
 
-{% code-tabs %}
-{% code-tabs-item title="Scoreable.java" %}
+{% tabs %}
+{% tab title="Scoreable.java" %}
 ```java
 @FunctionalInterface
 public interface Scoreable {
    int getScore();
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 
-{% code-tabs %}
-{% code-tabs-item title="ScoreCollection.java" %}
+{% tabs %}
+{% tab title="ScoreCollection.java" %}
 ```java
 public class ScoreCollection {
    private List<Scoreable> scores = new ArrayList<>();
@@ -37,13 +37,13 @@ public class ScoreCollection {
    }
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 
 ScoreCollection.java 파일에서 마우스 우클릭 &gt; Go To &gt; Test \(Ctrl + Shift + T\)를 하면 창이 뜨고 arithmeticMean\(\):int 메서드만 체크를 해주고 OK를 하면 다음과 같은 클래스가 생성될 것이다.
 
-{% code-tabs %}
-{% code-tabs-item title="ScoreCollection.java" %}
+{% tabs %}
+{% tab title="ScoreCollection.java" %}
 ```java
 public class ScoreCollectionTest {
 
@@ -53,8 +53,8 @@ public class ScoreCollectionTest {
     }
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 
 그런 뒤에 실행해보면 통과하는 것을 볼 수 있다.
 
@@ -62,8 +62,8 @@ public class ScoreCollectionTest {
 
 앞에서 빈 껍데기를 테스트하여 JUnit을 사용할 준비가 되었으면 내용을 채워보자.
 
-{% code-tabs %}
-{% code-tabs-item title="ScoreCollectionTest.java" %}
+{% tabs %}
+{% tab title="ScoreCollectionTest.java" %}
 ```java
 public class ScoreCollectionTest {
 
@@ -79,8 +79,8 @@ public class ScoreCollectionTest {
     }
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 
 간단히 코드를 설명하면 List안에 5 와 7을 추가\(line 5~8\)한다. 그리고 actualResult라는 변수는 해당 List를 순회하면서 원소를 다 더한 뒤 List의 크기로 나눠 준 값\(line 9\)이 들어간다. assertThat\(\) 메서드는 실제 결과와 matcher객체를 인자로 받고 기대되는 값인 6과 비교\(line 11\)한다.
 

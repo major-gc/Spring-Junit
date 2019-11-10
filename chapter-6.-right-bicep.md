@@ -13,8 +13,8 @@
 
 테스트 코드는 먼저 기대한 결과가 산출되는지 검증할 수 있어야 한다.
 
-{% code-tabs %}
-{% code-tabs-item title="ScoreCollection.java" %}
+{% tabs %}
+{% tab title="ScoreCollection.java" %}
 ```java
 @Test
 public void answersArithmeticMeanOfTwoNumbers() {
@@ -27,8 +27,8 @@ public void answersArithmeticMeanOfTwoNumbers() {
     assertThat(actualResult, equalTo(6));
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 
 해당 예시코드에서 더 많은 수들이나 혹은 큰 수들을 넣어 테스트를 해볼 수 있지만 Right에서 말하고자 하는 것은 내가 이 코드의 시나리오에 대해 정확히 이해하고 있는가이다. 그러니 예상되는 결과 값을 개발자 자신이 이해하고 있어야한다는 것이고 예상하지 못한다면 잠시 개발을 보류하는 것도 좋다.
 
@@ -69,8 +69,8 @@ public void answersArithmeticMeanOfTwoNumbers() {
 * 정렬이 안 된 정렬 리스트 혹은 그 반대. 정렬 알고리즘에 이미 정렬된 입력 값을 넣는 경우나 정렬 알고리즘에 역순 데이터를 넣는 경우
 * 시간 순이 맞지 않는 경우. 예를 들어 HTTP 서버가 OPINIONS 메서드의 결과를 POST 메서드보다 먼저 반환해야 하지만 그 후에 반환하는 경우
 
-{% code-tabs %}
-{% code-tabs-item title="ScoreCollection.java" %}
+{% tabs %}
+{% tab title="ScoreCollection.java" %}
 ```java
 import java.util.*;
 
@@ -87,30 +87,30 @@ public class ScoreCollection {
     }
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 
 위 코드는 1장에서 나왔던 코드이다. 그다지 문제는 없어보이지만 경계 조건을 보면서 살펴보자
 
 #### Problem 1. 입력된 Scoreable 인스턴스가 null일 경우
 
-{% code-tabs %}
-{% code-tabs-item title="ScoreCollectionTest.java" %}
+{% tabs %}
+{% tab title="ScoreCollectionTest.java" %}
 ```java
 @Test(expected=IllegalArgumentException.class)
 public void throwsExceptionWhenAddingNull() {
     collection.add(null);
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 
 arithmeticMean\(\) 메서드에서는 당연히 NullPointerException이 발생하게 된다. 따라서 테스트 코드에서 먼저 걸러내야 하고 클라이언트가 유효하지 않은 값을 넣자마자 오류가 발생하도록 하는 것이 좋다.
 
 #### Problem 1. 해결 방법
 
-{% code-tabs %}
-{% code-tabs-item title="ScoreCollection.java" %}
+{% tabs %}
+{% tab title="ScoreCollection.java" %}
 ```java
 public void add(Scoreable scoreable) {
     if(scoreable == null) throw new IllegalArgumentException{
@@ -118,45 +118,45 @@ public void add(Scoreable scoreable) {
     }
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 
 #### Problem 2. 0으로 나누어 나는 오류
 
-{% code-tabs %}
-{% code-tabs-item title="ScoreCollectionTest.java" %}
+{% tabs %}
+{% tab title="ScoreCollectionTest.java" %}
 ```text
 
 ```
-{% endcode-tabs-item %}
+{% endtab %}
 
-{% code-tabs-item title=undefined %}
+{% tab title="Java" %}
 ```java
 @Test
 public void ansersZeroWhenNoElementsAdded() {
     assertThat(collection.arithmeticMean(), equalTo(0));
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 
 #### Problem 2. 해결 방법
 
-{% code-tabs %}
-{% code-tabs-item title="ScoreCollection.java" %}
+{% tabs %}
+{% tab title="ScoreCollection.java" %}
 ```java
 public int arithmeticMean() {
     if(scores.size() == 0) return 0;
     // ...
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 
 #### Problem 3.  큰 정수 입력을 다루어 숫자들의 합이 Integer.MAX\_VALUE를 초과하는 경우
 
-{% code-tabs %}
-{% code-tabs-item title="ScoreCollectionTest.java" %}
+{% tabs %}
+{% tab title="ScoreCollectionTest.java" %}
 ```java
 @Test
 public void dealsWithIntegerOverflow() {
@@ -166,21 +166,21 @@ public void dealsWithIntegerOverflow() {
     assertThat(collection.arithmeticMean, equalTo(1073741824))
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 
 Integer.MAX\_VALUE 는 2147483647로 위에 1073741824보다 크다. 1을 더했는데 오히려 값이 줄어든 것을 확인할 수 있다.
 
 #### Problem 3. 해결 방법
 
-{% code-tabs %}
-{% code-tabs-item title="ScoreCollection.java" %}
+{% tabs %}
+{% tab title="ScoreCollection.java" %}
 ```java
 long total = score.stream().mapToLong(Scoreable::getScore).sum();
 return (int)(total / scores.size());
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 
 long타입에서 int타입으로 다운 캐스팅이 이루어졌다. 무언가 추가적인 검사를 해야 할 것처럼 보이지만 그렇지 않다. add\(\) 메서드에서는 개별 입력 값을 int 타입으로 한정하고 개수만큼 나누게 되면 int 최댓값보다 작은 값만 반환할 수 밖에 없다.
 
@@ -208,8 +208,8 @@ CORRECT 약어는 잠재적인 경계 조건을 기억하는 데 도움이 된�
 
 우리는 뉴턴의 알고리즘을 활용해서 제곱근을 구한다. 어떤 숫자의 제곱근을 유도하고 그 결과를 제곱하면\(즉, 자기 자신을 곱하면\) 우리가 시작했던 값과 같은 숫자를 얻어야 함을 기억하고 다음의 코드를 보자.
 
-{% code-tabs %}
-{% code-tabs-item title="NewtonTest.java" %}
+{% tabs %}
+{% tab title="NewtonTest.java" %}
 ```java
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -237,20 +237,20 @@ public class NewtonTest {
     }
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 
 ## 6.5 Right - BI\[C\]EP : 다른 수단을 활용하여 교차 검사할 수 있는가?
 
 우리는 Math.sqrt\(\) 라는 좋은 메서드를 두고 위에서 제곱근을 구하는 함수를 만들었다. 이러한 로직이 동일한 결과 값을 내는지 확인하기 위해 Math.sqrt\(\) 메서드를 통해 확인할 수 있다.
 
-{% code-tabs %}
-{% code-tabs-item title="NewtonTest.java" %}
+{% tabs %}
+{% tab title="NewtonTest.java" %}
 ```java
 assertThat(Newton.squareRoot(1969.0), closeTo(Math.sqrt(1969.0), Newton.TOLERANCE));
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 
 또 다른 예로는 도서 대출 시스템을 생각해 볼 수 있다. 도서관에 대출된 도서와 대출되지 않은 도서의 도서 개수를 합하면 도서의 총 수량과 같아야하는 점을 이용해 서로 교차 검사할 수 있다.
 
@@ -274,8 +274,8 @@ assertThat(Newton.squareRoot(1969.0), closeTo(Math.sqrt(1969.0), Newton.TOLERANC
 
 정말 많은 프로그래머들이 성능 문제가 어디에 있는지 최적의 해법이 무엇인지 추측을 한다. 하지만 문제는 이러한 추측이 때때로 잘못되었다는 것이다. 성능 문제를 추측으로 대응하기보다는 단위 테스트를 설계해서 진짜 문제가 어디에 있으며 예상한 변경 사항으로 어떤 차이가 생겼는지 파악해야 한다.
 
-{% code-tabs %}
-{% code-tabs-item title="ProfileTest.java" %}
+{% tabs %}
+{% tab title="ProfileTest.java" %}
 ```java
 @Test
 public void findAnswers() {
@@ -296,11 +296,11 @@ public void findAnswers() {
       assertTrue(elapsedMs < 1000);
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 
-{% code-tabs %}
-{% code-tabs-item title="ProfileTest.java" %}
+{% tabs %}
+{% tab title="ProfileTest.java" %}
 ```java
 private long run(int times, Runnable func) {
    long start = System.nanoTime();
@@ -310,8 +310,8 @@ private long run(int times, Runnable func) {
    return (stop - start) / 1000000;
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 
 앞의 코드는 그 코드가 특정 시간 안에 실행되는지를 테스트하기 위해 뒤에 run\(\) 메서드를 이용했다.
 
