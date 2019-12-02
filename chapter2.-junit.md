@@ -118,8 +118,7 @@ Junit 테스트를 실행할 때마다 @Before 애너테이션으로 선언한 �
 
 4.matchAnswersTrueForAnyDontCareCriteria\(\) 메서드 테스트
 
-{% code-tabs %}
-{% code-tabs-item title="Scoreable.java" %}
+{% code title="Scoreable.java" %}
 ```java
 public class ProfileTest2 {
     private Profile profile;
@@ -156,6 +155,5 @@ public class ProfileTest2 {
     }
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endcode %}
 
